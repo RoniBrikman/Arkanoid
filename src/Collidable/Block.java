@@ -3,16 +3,21 @@ package Collidable;
 
 import Geometry.Point;
 import Geometry.Rectangle;
+import Sprite.Ball;
 import Geometry.Velocity;
 import biuoop.DrawSurface;
 import Sprite.Sprite;
 import Game.Game;
 
-public class Block implements Collidable, Sprite {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Block implements Collidable, Sprite, HitNotifier {
     /**
      * The constant THRESHOLD.
      */
     public static final double THRESHOLD = 0.0001;
+    List<HitListener> hitListeners;
     private Rectangle rectangle;
 
     /**
@@ -22,6 +27,7 @@ public class Block implements Collidable, Sprite {
      */
     public Block(Rectangle rec) {
         this.rectangle = rec;
+        this.hitListeners = new ArrayList<HitListener>();
     }
 
 
@@ -32,7 +38,8 @@ public class Block implements Collidable, Sprite {
     }
 
     @Override
-    public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
+    public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
+        this.notifyHit(hitter);
         double dx = currentVelocity.getDx();
         double dy = currentVelocity.getDy();
         // if the collision is from left/right
@@ -76,5 +83,27 @@ public class Block implements Collidable, Sprite {
     public void addToGame(Game g) {
         g.addCollidable(this);
         g.addSprite(this);
+    }
+
+    public void removeFromGame(Game game){
+        game.removeCollidable(this);
+        game.removeSprite(this);
+    }
+    private void notifyHit(Ball hitter) {
+        // Make a copy of the hitListeners before iterating over them.
+        List<HitListener> listeners = new ArrayList<HitListener>(this.hitListeners);
+        // Notify all listeners about a hit event:
+        for (HitListener hl : listeners) {
+            hl.hitEvent(this, hitter);
+        }
+        
+    }
+    @Override
+    public void addHitListener(HitListener hl){
+        this.hitListeners.add(hl);
+    }
+    @Override
+    public void removeHitListener(HitListener hl){
+        this.hitListeners.remove(hl);
     }
 }

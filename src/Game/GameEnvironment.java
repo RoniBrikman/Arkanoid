@@ -5,6 +5,7 @@ import Collidable.CollisionInfo;
 import Geometry.Line;
 import Geometry.Point;
 import Geometry.Rectangle;
+import Sprite.Sprite;
 import biuoop.DrawSurface;
 import biuoop.GUI;
 import java.awt.Color;
@@ -18,6 +19,9 @@ import Collidable.Collidable;
 public class GameEnvironment {
     private List<Collidable> collidables;
 
+    /**
+     * The constant THRESHOLD.
+     */
     public static final double THRESHOLD = 0.0001;
 
     /**
@@ -34,6 +38,15 @@ public class GameEnvironment {
      */
     public void addCollidable(Collidable c) {
         collidables.add(c);
+    }
+
+    /**
+     * Remove collidable.
+     *
+     * @param c the collidable
+     */
+    public void removeCollidable(Collidable c) {
+        this.collidables.remove(c);
     }
 
     /**

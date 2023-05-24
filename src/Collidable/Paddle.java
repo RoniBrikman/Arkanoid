@@ -7,6 +7,7 @@ import biuoop.DrawSurface;
 import Game.Game;
 import Sprite.Sprite;
 import java.awt.Color;
+import Sprite.Ball;
 
 /**
  * The type src.Paddle.
@@ -87,7 +88,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     @Override
-    public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
+    public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
         double dx = currentVelocity.getDx();
         double dy = currentVelocity.getDy();
         double x = collisionPoint.getX();

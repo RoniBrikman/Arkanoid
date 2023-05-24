@@ -1,6 +1,9 @@
 //323871723 Roni Brikman
 package Sprite;
+
+import Collidable.HitListener;
 import biuoop.DrawSurface;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +30,21 @@ public class SpriteCollection {
     }
 
     /**
+     * Remove sprite.
+     *
+     * @param s the sprite to remove
+     */
+    public void removeSprite(Sprite s) {
+        this.sprites.remove(s);
+
+    }
+
+    /**
      * calls timePassed() on all sprites.
      */
     public void notifyAllTimePassed() {
-        for (Sprite sprites : this.sprites) {
+        List<Sprite> sprites2 = new ArrayList<Sprite>(this.sprites);
+        for (Sprite sprites : sprites2) {
             sprites.timePassed();
         }
     }

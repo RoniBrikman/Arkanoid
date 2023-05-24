@@ -1,5 +1,6 @@
 //323871723 Roni Brikman
 package Game;
+
 import Collidable.Block;
 import Collidable.Paddle;
 import Geometry.Point;
@@ -10,13 +11,18 @@ import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
 import Collidable.Collidable;
+import Collidable.HitListener;
 import Sprite.Sprite;
+import Collidable.BlockRemover;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type src.Game.
  */
 public class Game {
+    private Counter counter;
     private SpriteCollection sprites;
     private final GameEnvironment environment;
     private GUI gui;
@@ -39,6 +45,7 @@ public class Game {
     public Game() {
         this.sprites = new SpriteCollection();
         this.environment = new GameEnvironment();
+        this.counter = new Counter(57);
     }
 
     /**
@@ -57,6 +64,33 @@ public class Game {
      */
     public void addSprite(Sprite s) {
         this.sprites.addSprite(s);
+    }
+
+    /**
+     * Gets counter.
+     *
+     * @return the counter
+     */
+    public Counter getCounter() {
+        return this.counter;
+    }
+
+    /**
+     * Remove collidable.
+     *
+     * @param c the collidable
+     */
+    public void removeCollidable(Collidable c) {
+        this.environment.removeCollidable(c);
+    }
+
+    /**
+     * Remove sprite.
+     *
+     * @param s the sprite
+     */
+    public void removeSprite(Sprite s) {
+        this.sprites.removeSprite(s);
     }
 
     /**
@@ -81,39 +115,47 @@ public class Game {
 
     /**
      * Draws the blocks on the screen.
+     *
+     * @param p the p
      */
-    public void addBlocks() {
+    public void addBlocks(HitListener p) {
         int blockWidth = SCREEN_WIDTH / 16;
         int blockHeight = SCREEN_HEIGHT / 25;
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 13; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.MAGENTA);
             block.addToGame(this);
+            block.addHitListener(p);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 12; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.PINK);
             block.addToGame(this);
+            block.addHitListener(p);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 11; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 2 * blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.CYAN);
             block.addToGame(this);
+            block.addHitListener(p);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 10; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 3 * blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.BLUE);
             block.addToGame(this);
+            block.addHitListener(p);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 9; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 4 * blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.orange);
             block.addToGame(this);
+            block.addHitListener(p);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 8; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 5 * blockHeight + 0.1), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.YELLOW);
             block.addToGame(this);
+            block.addHitListener(p);
         }
     }
 
@@ -139,11 +181,12 @@ public class Game {
     public void initialize() {
         this.gui = new GUI("Collision test", 800, 600);
         biuoop.KeyboardSensor keyboard = gui.getKeyboardSensor();
+        BlockRemover b= new BlockRemover(this, this.counter);
         DrawSurface d = gui.getDrawSurface();
         //adding the balls
         this.addBalls();
         //adding the blocks
-        this.addBlocks();
+        this.addBlocks(b);
         //adding the borders
         this.addBorders();
         //adding the paddle
@@ -164,6 +207,9 @@ public class Game {
             this.sprites.drawAllOn(d);
             gui.show(d);
             this.sprites.notifyAllTimePassed();
+            if (this.counter.getValue()== 0){
+                gui.close();
+            }
             // timing
             long usedTime = System.currentTimeMillis() - startTime;
             long milliSecondLeftToSleep = millisecondsPerFrame - usedTime;
@@ -172,10 +218,16 @@ public class Game {
             }
         }
     }
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         Game game = new Game();
         game.initialize();
         game.run();
     }
-   
+
 }
