@@ -12,16 +12,22 @@ import Game.Game;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Block. All the blocks of the game.
+ */
 public class Block implements Collidable, Sprite, HitNotifier {
     /**
      * The constant THRESHOLD.
      */
     public static final double THRESHOLD = 0.0001;
-    List<HitListener> hitListeners;
+    /**
+     * The Hit listeners.
+     */
+    private List<HitListener> hitListeners;
     private Rectangle rectangle;
 
     /**
-     * Instantiates a new src.Block.
+     * Instantiates a new Block.
      *
      * @param rec the rec
      */
@@ -31,7 +37,7 @@ public class Block implements Collidable, Sprite, HitNotifier {
     }
 
 
-    //src.Collidable
+    //Collidable
     @Override
     public Rectangle getCollisionRectangle() {
         return this.rectangle;
@@ -39,6 +45,7 @@ public class Block implements Collidable, Sprite, HitNotifier {
 
     @Override
     public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
+        //notifying on hit
         this.notifyHit(hitter);
         double dx = currentVelocity.getDx();
         double dy = currentVelocity.getDy();
@@ -85,25 +92,34 @@ public class Block implements Collidable, Sprite, HitNotifier {
         g.addSprite(this);
     }
 
-    public void removeFromGame(Game game){
+    /**
+     * Remove the block from the game.
+     *
+     * @param game the game
+     */
+    public void removeFromGame(Game game) {
         game.removeCollidable(this);
         game.removeSprite(this);
     }
+   /**
+    * Notifies on a hit to the listeners.
+    *
+    * @param hitter the hitting ball
+     */
     private void notifyHit(Ball hitter) {
-        // Make a copy of the hitListeners before iterating over them.
+        // Making a copy of the hitListeners before iterating over them.
         List<HitListener> listeners = new ArrayList<HitListener>(this.hitListeners);
         // Notify all listeners about a hit event:
         for (HitListener hl : listeners) {
             hl.hitEvent(this, hitter);
         }
-        
     }
     @Override
-    public void addHitListener(HitListener hl){
+    public void addHitListener(HitListener hl) {
         this.hitListeners.add(hl);
     }
     @Override
-    public void removeHitListener(HitListener hl){
+    public void removeHitListener(HitListener hl) {
         this.hitListeners.remove(hl);
     }
 }

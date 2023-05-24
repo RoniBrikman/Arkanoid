@@ -3,6 +3,9 @@ package Collidable;
 
 import Geometry.Point;
 
+/**
+ * The type Collision info. Holds information on the collision Point and the Collidable.
+ */
 public class CollisionInfo {
     private Point collisionPoint;
     private Collidable collidable;
@@ -19,7 +22,7 @@ public class CollisionInfo {
     }
 
     /**
-     * Collision point.
+     * This method gets the Collision point.
      *
      * @return the point
      */

@@ -1,5 +1,6 @@
 //323871723 Roni Brikman
 package Sprite;
+
 import java.awt.Color;
 
 import Collidable.CollisionInfo;
@@ -172,7 +173,7 @@ public class Ball implements Sprite {
         Line l = new Line(this.center, p);
         CollisionInfo collision = this.game.getClosestCollision(l);
         if (collision != null) {
-            this.velocity = collision.collisionObject().hit(this,collision.collisionPoint(), this.velocity);
+            this.velocity = collision.collisionObject().hit(this, collision.collisionPoint(), this.velocity);
             if (this.center.getX() - this.r >= collision.collisionPoint().getX() - THRESHOLD) {
                 this.setCenter(collision.collisionPoint().getX() + this.r, this.getY());
             } else if (this.center.getX() + this.r <= collision.collisionPoint().getX() + THRESHOLD) {
@@ -186,7 +187,15 @@ public class Ball implements Sprite {
         } else {
             this.center = this.getVelocity().applyToPoint(this.center);
         }
-//        this.center = this.getVelocity().applyToPoint(this.center);
+    }
+
+    /**
+     * Removes the ball from a game.
+     *
+     * @param game the game to remove from
+     */
+    public void removeFromGame(Game game) {
+        game.removeSprite(this);
     }
 
     /**
@@ -198,7 +207,7 @@ public class Ball implements Sprite {
         g.addSprite(this);
     }
 
-    //src.Sprite
+    //Sprite
     @Override
     public void timePassed() {
         this.moveOneStep();

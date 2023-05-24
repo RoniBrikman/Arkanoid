@@ -1,7 +1,17 @@
+//323871723 Roni Brikman
 package Game;
+
+/**
+ * The type Counter. It can count things we initialize it to count.
+ */
 public class Counter {
     private int count;
 
+    /**
+     * Instantiates a new Counter.
+     *
+     * @param count the start number
+     */
     public Counter(int count) {
         this.count = count;
     }
@@ -25,7 +35,7 @@ public class Counter {
     }
 
     /**
-     * Gets current count...
+     * Gets the current count number.
      *
      * @return the count
      */

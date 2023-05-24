@@ -3,7 +3,7 @@ package Geometry;
 import java.util.Random;
 
 /**
- * The type src.Point.
+ * The type Point.
  *
  * @author Roni Brikman < ronibrikman@gmail.com >
  * @version 1
@@ -14,7 +14,7 @@ public class Point {
     private double y;
 
     /**
-     * Instantiates a new src.Point using x and y values.
+     * Instantiates a new Point using x and y values.
      *
      * @param x the x value
      * @param y the y value
@@ -25,7 +25,7 @@ public class Point {
     }
 
     /**
-     * Instantiates a new src.Point Using different point.
+     * Instantiates a new Point Using different point.
      *
      * @param oldPoint the old point
      */
@@ -35,7 +35,7 @@ public class Point {
     }
 
     /**
-     * Generate random point point.
+     * Generate random point.
      *
      * @param maxX the max x
      * @param maxY the max y
@@ -51,7 +51,7 @@ public class Point {
     /**
      * This method returns the distance between two points.
      *
-     * @param other the other src.Point
+     * @param other the other Point
      * @return the distance between two Points
      */
     public double distance(Point other) {
@@ -61,7 +61,7 @@ public class Point {
     /**
      * This method checks if two Points are equal to one another using a threshold.
      *
-     * @param other the other src.Point
+     * @param other the other Point
      * @return True if they are equal, False if not
      */
     public boolean equals(Point other) {
@@ -71,9 +71,9 @@ public class Point {
     }
 
     /**
-     * This method gets the x value of a src.Point.
+     * This method gets the x value of a Point.
      *
-     * @return the x value of a src.Point
+     * @return the x value of a Point
      */
 // Return the x and y values of this point
     public double getX() {
@@ -81,9 +81,9 @@ public class Point {
     }
 
     /**
-     * This method gets the y value of a src.Point.
+     * This method gets the y value of a Point.
      *
-     * @return the y value of a src.Point
+     * @return the y value of a Point
      */
     public double getY() {
         return this.y;

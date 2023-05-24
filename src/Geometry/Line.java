@@ -3,7 +3,7 @@ package Geometry;
 import java.util.List;
 
 /**
- * The type src.Line.
+ * The type Line.
  *
  * @author Roni Brikman < ronibrikman@gmail.com >
  * @version 1
@@ -19,10 +19,10 @@ public class Line {
     private Point end;
 
     /**
-     * Instantiates a new src.Line using two points.
+     * Instantiates a new Line using two points.
      *
-     * @param start the start src.Point
-     * @param end   the end src.Point
+     * @param start the start Point
+     * @param end   the end Point
      */
 // constructors
     public Line(Point start, Point end) {

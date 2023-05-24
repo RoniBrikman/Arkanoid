@@ -1,7 +1,7 @@
 //323871723 Roni Brikman
 package Geometry;
 /**
- * The type src.Velocity. src.Velocity specifies the change in position on the `x` and the `y` axes.
+ * The type Velocity. Velocity specifies the change in position on the `x` and the `y` axes.
  *
  * @author Roni Brikman < ronibrikman@gmail.com >
  * @version 1
@@ -13,7 +13,7 @@ public class Velocity {
     private double dy;
 
     /**
-     * This method instantiates a new src.Velocity.
+     * This method instantiates a new Velocity.
      *
      * @param dx the dx
      * @param dy the dy
@@ -53,7 +53,7 @@ public class Velocity {
 
 
     /**
-     * This method gets speed and angle and converts them (using math) to new src.Velocity.
+     * This method gets speed and angle and converts them (using math) to new Velocity.
      *
      * @param angle the angle
      * @param speed the speed

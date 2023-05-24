@@ -1,20 +1,18 @@
 //323871723 Roni Brikman
 package Sprite;
-
-import Collidable.HitListener;
 import biuoop.DrawSurface;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type src.Sprite collection.
+ * The type Sprite collection. Is a collection of all the sprites in a game.
  */
 public class SpriteCollection {
     private List<Sprite> sprites;
 
     /**
-     * Instantiates a new src.Sprite collection.
+     * Instantiates a new Sprite collection.
      */
     public SpriteCollection() {
         this.sprites = new ArrayList<>();
@@ -23,7 +21,7 @@ public class SpriteCollection {
     /**
      * Add sprite.
      *
-     * @param s the s
+     * @param s the sprite to add
      */
     public void addSprite(Sprite s) {
         this.sprites.add(s);

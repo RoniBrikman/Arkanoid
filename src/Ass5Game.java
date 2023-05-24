@@ -1,9 +1,10 @@
+//323871723 Roni Brikman
 import Game.Game;
 
 /**
- * The type Ass 3 game.
+ * The class that runs the game.
  */
-public class Ass3Game {
+public class Ass5Game {
     /**
      * The entry point of application.
      *
@@ -14,5 +15,4 @@ public class Ass3Game {
         game.initialize();
         game.run();
     }
-    
 }

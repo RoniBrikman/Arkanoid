@@ -10,26 +10,20 @@ import java.awt.Color;
 import Sprite.Ball;
 
 /**
- * The type src.Paddle.
+ * The type Paddle. The paddle of the game.
  */
 public class Paddle implements Sprite, Collidable {
     private final biuoop.KeyboardSensor keyboard;
     private Rectangle rectangle;
-    /**
-     * The constant SPEED.
-     */
     public static final double SPEED = 7;
-    /**
-     * The constant THRESHOLD.
-     */
     public static final double THRESHOLD = 0.0001;
 
     /**
-     * Instantiates a new src.Paddle.
+     * Instantiates a new Paddle.
      *
      * @param keyboard the keyboard
-     * @param rec      the rec
-     * @param color    the color
+     * @param rec      the rectangle of the paddle
+     * @param color    the color of the paddle
      */
     public Paddle(biuoop.KeyboardSensor keyboard, Rectangle rec, Color color) {
         this.keyboard = keyboard;
@@ -62,7 +56,7 @@ public class Paddle implements Sprite, Collidable {
                 this.rectangle.getUpperLeft().getY()));
     }
 
-    // src.Sprite
+    // Sprite
     @Override
     public void timePassed() {
         if (keyboard.isPressed(this.keyboard.RIGHT_KEY)) {
@@ -81,7 +75,6 @@ public class Paddle implements Sprite, Collidable {
     public void drawOn(DrawSurface d) {
         this.rectangle.drawOn(d);
     }
-    
     @Override
     public Rectangle getCollisionRectangle() {
         return this.rectangle;
@@ -117,7 +110,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     /**
-     * Add to game.
+     * Add to the paddle to the game.
      *
      * @param g the g
      */

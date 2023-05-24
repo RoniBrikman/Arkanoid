@@ -1,6 +1,5 @@
 //323871723 Roni Brikman
 package Game;
-
 import Collidable.Block;
 import Collidable.Paddle;
 import Geometry.Point;
@@ -15,68 +14,72 @@ import Collidable.HitListener;
 import Sprite.Sprite;
 import Collidable.BlockRemover;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import Sprite.BallRemover;
+
 
 /**
- * The type src.Game.
+ * The type Game, where the game happens.
  */
 public class Game {
-    private Counter counter;
+    private Counter blocksCounter;
+    private Counter ballsCounter;
+    private Counter score;
     private SpriteCollection sprites;
     private final GameEnvironment environment;
     private GUI gui;
-    /**
-     * The constant SCREEN_HEIGHT.
-     */
     public static final int SCREEN_HEIGHT = 600;
-    /**
-     * The constant SCREEN_WIDTH.
-     */
     public static final int SCREEN_WIDTH = 800;
-    /**
-     * The constant BLOCK_HEIGHT.
-     */
-    public static final int BORDER_HEIGHT = 10;
+    public static final int BORDER_HEIGHT = 17;
 
     /**
-     * Instantiates a new src.Game.
+     * Instantiates a new Game.
      */
     public Game() {
         this.sprites = new SpriteCollection();
         this.environment = new GameEnvironment();
-        this.counter = new Counter(57);
+        this.blocksCounter = new Counter(57);
+        this.ballsCounter = new Counter(3);
+        this.score = new Counter(0);
     }
 
     /**
-     * Add collidable.
+     * Add collidable to the game.
      *
-     * @param c the c
+     * @param c the collidable to add
      */
     public void addCollidable(Collidable c) {
         this.environment.addCollidable(c);
     }
 
     /**
-     * Add sprite.
+     * Add sprite to the game.
      *
-     * @param s the s
+     * @param s the sprite to add
      */
     public void addSprite(Sprite s) {
         this.sprites.addSprite(s);
     }
 
     /**
-     * Gets counter.
+     * Gets the counter of the blocks.
      *
      * @return the counter
      */
-    public Counter getCounter() {
-        return this.counter;
+    public Counter getBlocksCounter() {
+        return this.blocksCounter;
     }
 
     /**
-     * Remove collidable.
+     * Gets the balls counter.
+     *
+     * @return the balls counter
+     */
+    public Counter getBallsCounter() {
+        return this.ballsCounter;
+    }
+
+    /**
+     * Remove collidable from the game.
      *
      * @param c the collidable
      */
@@ -85,7 +88,7 @@ public class Game {
     }
 
     /**
-     * Remove sprite.
+     * Remove sprite from the game.
      *
      * @param s the sprite
      */
@@ -95,30 +98,38 @@ public class Game {
 
     /**
      * Draws the borders of the screen.
+     *
+     * @param p the p
      */
-    public void addBorders() {
-        Block top = new Block(new Rectangle(new Point(0, 0), SCREEN_WIDTH, BORDER_HEIGHT));
-        top.getCollisionRectangle().setColor(Color.gray);
+    public void addBorders(HitListener p) {
+        //the top
+        Block top = new Block(new Rectangle(new Point(0, 20), SCREEN_WIDTH, BORDER_HEIGHT));
+        top.getCollisionRectangle().setColor(Color.darkGray);
         top.addToGame(this);
-        Block bottom = new Block(new Rectangle(new Point(0, SCREEN_HEIGHT - BORDER_HEIGHT),
+        //the bottom - death block
+        Block bottom = new Block(new Rectangle(new Point(0, SCREEN_HEIGHT),
                 SCREEN_WIDTH, BORDER_HEIGHT));
-        bottom.getCollisionRectangle().setColor(Color.gray);
+        bottom.getCollisionRectangle().setColor(Color.darkGray);
         bottom.addToGame(this);
-        Block left = new Block(new Rectangle(new Point(0, 0), BORDER_HEIGHT, SCREEN_HEIGHT));
-        left.getCollisionRectangle().setColor(Color.gray);
+        bottom.addHitListener(p);
+        // the left
+        Block left = new Block(new Rectangle(new Point(0, 20), BORDER_HEIGHT, SCREEN_HEIGHT));
+        left.getCollisionRectangle().setColor(Color.darkGray);
         left.addToGame(this);
-        Block right = new Block(new Rectangle(new Point(SCREEN_WIDTH - BORDER_HEIGHT, 0),
+        //the right
+        Block right = new Block(new Rectangle(new Point(SCREEN_WIDTH - BORDER_HEIGHT, 20),
                 BORDER_HEIGHT, SCREEN_HEIGHT));
-        right.getCollisionRectangle().setColor(Color.gray);
+        right.getCollisionRectangle().setColor(Color.darkGray);
         right.addToGame(this);
     }
 
     /**
      * Draws the blocks on the screen.
      *
-     * @param p the p
+     * @param p     the Hit listener
+     * @param score the score
      */
-    public void addBlocks(HitListener p) {
+    public void addBlocks(HitListener p,  ScoreTrackingListener score) {
         int blockWidth = SCREEN_WIDTH / 16;
         int blockHeight = SCREEN_HEIGHT / 25;
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 13; i++, j = j - blockWidth) {
@@ -126,36 +137,42 @@ public class Game {
             block.getCollisionRectangle().setColor(Color.MAGENTA);
             block.addToGame(this);
             block.addHitListener(p);
+            block.addHitListener(score);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 12; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.PINK);
             block.addToGame(this);
             block.addHitListener(p);
+            block.addHitListener(score);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 11; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 2 * blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.CYAN);
             block.addToGame(this);
             block.addHitListener(p);
+            block.addHitListener(score);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 10; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 3 * blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.BLUE);
             block.addToGame(this);
             block.addHitListener(p);
+            block.addHitListener(score);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 9; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 4 * blockHeight), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.orange);
             block.addToGame(this);
             block.addHitListener(p);
+            block.addHitListener(score);
         }
         for (int i = 0, j = SCREEN_WIDTH - BORDER_HEIGHT; i < 8; i++, j = j - blockWidth) {
             Block block = new Block(new Rectangle(new Point(j, 100 + 5 * blockHeight + 0.1), blockWidth, blockHeight));
             block.getCollisionRectangle().setColor(Color.YELLOW);
             block.addToGame(this);
             block.addHitListener(p);
+            block.addHitListener(score);
         }
     }
 
@@ -171,27 +188,33 @@ public class Game {
         ball2.setVelocity(-5, -3);
         ball2.setEnvironment(this.environment);
         ball2.addToGame(this);
-
+        Ball ball3 = new Ball(400, 560, 5, Color.RED);
+        ball3.setVelocity(-5, -2);
+        ball3.setEnvironment(this.environment);
+        ball3.addToGame(this);
     }
 
     /**
-     * Initialize a new game: create the Blocks, Balls and src.Paddle.
+     * Initialize a new game: create the Blocks, Balls and Paddle.
      */
-// and add them to the game.
     public void initialize() {
         this.gui = new GUI("Collision test", 800, 600);
         biuoop.KeyboardSensor keyboard = gui.getKeyboardSensor();
-        BlockRemover b= new BlockRemover(this, this.counter);
-        DrawSurface d = gui.getDrawSurface();
+        ScoreTrackingListener score = new ScoreTrackingListener(this.score);
+        BlockRemover blockRemover = new BlockRemover(this, this.blocksCounter);
+        BallRemover ballsRemover = new BallRemover(this, this.ballsCounter);
         //adding the balls
         this.addBalls();
         //adding the blocks
-        this.addBlocks(b);
+        this.addBlocks(blockRemover, score);
         //adding the borders
-        this.addBorders();
+        this.addBorders(ballsRemover);
         //adding the paddle
         Paddle paddle = new Paddle(keyboard, new Rectangle(new Point(375, 570), 80, 20), Color.BLACK);
         paddle.addToGame(this);
+        //adding the score
+        ScoreIndicator scoreShow = new ScoreIndicator(this.score);
+        this.addSprite(scoreShow);
     }
 
     /**
@@ -207,8 +230,16 @@ public class Game {
             this.sprites.drawAllOn(d);
             gui.show(d);
             this.sprites.notifyAllTimePassed();
-            if (this.counter.getValue()== 0){
+            //checks if all the blocks are cleared
+            if (this.blocksCounter.getValue() == 0) {
+                this.score.increase(100);
                 gui.close();
+                return;
+            }
+            //checks if all the balls died
+            if (this.ballsCounter.getValue() == 0) {
+                gui.close();
+                return;
             }
             // timing
             long usedTime = System.currentTimeMillis() - startTime;
@@ -218,16 +249,4 @@ public class Game {
             }
         }
     }
-
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.initialize();
-        game.run();
-    }
-
 }
