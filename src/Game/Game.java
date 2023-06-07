@@ -198,7 +198,7 @@ public class Game {
      * Initialize a new game: create the Blocks, Balls and Paddle.
      */
     public void initialize() {
-        this.gui = new GUI("Collision test", 800, 600);
+        this.gui = new GUI("ARKANOID", 800, 600);
         biuoop.KeyboardSensor keyboard = gui.getKeyboardSensor();
         ScoreTrackingListener score = new ScoreTrackingListener(this.score);
         BlockRemover blockRemover = new BlockRemover(this, this.blocksCounter);
@@ -233,6 +233,7 @@ public class Game {
             //checks if all the blocks are cleared
             if (this.blocksCounter.getValue() == 0) {
                 this.score.increase(100);
+                System.out.println(score.getValue());
                 gui.close();
                 return;
             }
