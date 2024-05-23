@@ -1,0 +1,1 @@
+Arkanoid is a classic brick-breaking game where players control a paddle to bounce a ball and break bricks. My version of Arkanoid includes different levels and challenging gameplay elements. The full code is available on my Repository. Feel free to check it out and enjoy playing!
